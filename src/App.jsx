@@ -1,18 +1,27 @@
-import React from 'react';
+import React, { Component } from 'react';
 
+import './App.css';
 import Countdown from './Countdown';
 
-const App = () => (
-    <div>
-        <Countdown />
-        <div className="countdown">
-            <strong>śniadanie</strong> - 08:00
-        </div>
-        <div className="countdown">
-            <strong>obiad</strong> - 15:00
-        </div>
-    </div>
-);
+class App extends Component {
+    constructor() {
+        super();
+        this.state = {
+            events: [
+                {id: 0, name: "śniadanie", time: "07:00"},
+                {id: 1, name: "obiad", time: "15:00"},
+                {id: 2, name: "kolacja", time: "19:00"}
+            ]
+        }
+    }
+    render() {
+        const events = this.state.events.map(el => {
+            return <div><Countdown id={el.id} name={el.name} time={el.time} /></div>;
+        })
+        return (
+            <div className="App">{events}</div>
+        )
+    }
+}
 
 export default App;
-

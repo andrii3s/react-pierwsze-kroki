@@ -1,0 +1,10 @@
+#root,
+.App {
+    height: 100%;
+}
+
+.App {
+    background: #3181F2;
+    max-width: 500px;
+    margin: 0 auto;
+}
