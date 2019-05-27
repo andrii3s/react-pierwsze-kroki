@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import './App.css';
 import Countdown from './Countdown';
+import EditEvent from './EditEvent';
 
 class App extends Component {
     constructor() {
@@ -19,7 +20,10 @@ class App extends Component {
             return <div><Countdown id={el.id} name={el.name} time={el.time} /></div>;
         })
         return (
-            <div className="App">{events}</div>
+            <div className="App">
+                {events}
+                <EditEvent onSave={() => alert("A")}/>
+            </div>
         )
     }
 }
