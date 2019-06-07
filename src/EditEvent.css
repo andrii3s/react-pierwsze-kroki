@@ -1,20 +1,32 @@
-.edit-event {
+
+.edit-event-panel {
     background: linear-gradient(#fa7406, #f58032);
     color: #ffffff;
     font-size: 1.8rem;
-    padding: 25px;
+    padding: 5px;
 }
 
-.edit-event__input-group {
-    background: linear-gradient(#6dd8f3, #52d4eb);
-    color: #ffffff;
-    font-size: 1.8rem;    
+.edit-event-input-row {
+    display: grid;
+    grid-template-columns: 100px auto;    
+  }
+
+#name, #hour, #minute {
+    padding: 10px;    
+    font-size: 1.0rem;    
+}
+
+.buttons-panel {
+    display: grid;
+    margin-top: 5px;
+    background: linear-gradient(#fa7406, #f58032);        
+    font-size: 2.8rem;   
 }
 
 button {
-    background: linear-gradient(#fa7406, #f58032);
+    background: linear-gradient(#fa7406, #f58032);    
+    border-color: #ffffff;
+    margin: 1px;
     color: #ffffff;
-    margin: 20px;
-    padding: 5px;
-    font-size: 2.8rem;   
+    font-size: 2.0rem;   
 }
