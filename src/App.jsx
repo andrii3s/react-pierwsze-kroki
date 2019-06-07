@@ -1,25 +1,67 @@
 import React, { Component } from 'react';
+import uniqid from 'uniqid';
 
 import './App.css';
 import Countdown from './Countdown';
+import EditEvent from './EditEvent';
 
 class App extends Component {
     constructor() {
         super();
         this.state = {
             events: [
-                {id: 0, name: "śniadanie", time: "07:00"},
-                {id: 1, name: "obiad", time: "15:00"},
-                {id: 2, name: "kolacja", time: "19:00"}
-            ]
-        }
+                {id: 0, name: "śniadanie", hour: "07", minute: "00"},
+                {id: 1, name: "obiad", hour: "15", minute: "00"},
+                {id: 2, name: "kolacja", hour: "19", minute: "00"}                
+            ],
+            editedEvent: {
+                id: uniqid(),
+                name: "",
+                hour: "",
+                minute: ""
+            }
+        };
+        this.handleEditEvent = this.handleEditEvent.bind(this);
+        this.handleSaveEvent = this.handleSaveEvent.bind(this);
     }
+
+    handleEditEvent(val) {
+        this.setState(prevState => {
+            return {
+                editedEvent: Object.assign(prevState.editedEvent, val)
+            }
+        })
+    };
+
+    handleSaveEvent() {
+        this.setState(prevState => ({
+            events: [...prevState.events, prevState.editedEvent],
+            editedEvent: {
+                id: uniqid(),
+                name: "",
+                hour: "",
+                minute: ""
+            }
+        })
+        )
+    };
+
     render() {
         const events = this.state.events.map(el => {
-            return <div><Countdown id={el.id} name={el.name} time={el.time} /></div>;
-        })
+            return <div><Countdown key={el.id} name={el.name} hour={el.hour} minute={el.minute} /></div>;
+        });
+        
         return (
-            <div className="App">{events}</div>
+            <div className="App">
+                {events}
+                <EditEvent
+                    name = {this.state.editedEvent.name}
+                    hour = {this.state.editedEvent.hour}
+                    minute = {this.state.editedEvent.minute}
+                    onInputChange = {val => this.handleEditEvent(val)}
+                    onSave = {() => this.handleSaveEvent()}                    
+                />
+            </div>
         )
     }
 }
