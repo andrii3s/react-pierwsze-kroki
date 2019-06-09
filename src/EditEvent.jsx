@@ -2,6 +2,8 @@ import React from 'react';
 import './EditEvent.css';
 //import { tsPropertySignature } from '@babel/types';
 
+import { isValidNumberInput } from './utils.js';
+
 const EditEvent = props => {
     return (
         <div className="edit-event-panel">
@@ -22,6 +24,8 @@ const EditEvent = props => {
                     id="hour"
                     name="hour" 
                     value={props.hour}
+                    onPaste={e => e.preventDefault()}                    
+                    onKeyPress={e => isValidNumberInput(e)}
                     onChange = {e => props.onInputChange({[e.target.name]: e.target.value})}
                 />
             </div>
