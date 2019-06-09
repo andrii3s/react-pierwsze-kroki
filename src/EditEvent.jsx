@@ -36,6 +36,8 @@ const EditEvent = props => {
                     id="minute"
                     name="minute" 
                     value={props.minute}
+                    onPaste={e => e.preventDefault()}                    
+                    onKeyPress={e => isValidNumberInput(e)}
                     onChange = {e => props.onInputChange({[e.target.name]: e.target.value})}
                 />
             </div>

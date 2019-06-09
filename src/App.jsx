@@ -24,6 +24,7 @@ class App extends Component {
         this.handleEditEvent = this.handleEditEvent.bind(this);
         this.handleSaveEvent = this.handleSaveEvent.bind(this);
         this.handleRemoveEvent = this.handleRemoveEvent.bind(this);
+        this.handleEditInit = this.handleEditInit.bind(this);
     }
 
     handleEditEvent(val) {
@@ -35,21 +36,52 @@ class App extends Component {
     };
 
     handleSaveEvent() {
-        this.setState(prevState => ({
-            events: [...prevState.events, prevState.editedEvent],
-            editedEvent: {
-                id: uniqid(),
-                name: "",
-                hour: "",
-                minute: ""
+        this.setState(prevState => {
+            const editedEventExists = prevState.events.find(el => el.id === prevState.editedEvent.id);
+
+            let updatedEvent;
+            if (editedEventExists) {
+                updatedEvent = prevState.events.map(el => {
+                    if (el.id === prevState.editedEvent.id) return prevState.editedEvent;
+                    else return el;
+                })
+            } else {
+                updatedEvent = [...prevState.events, prevState.editedEvent]
             }
-        })
+
+            return {
+                events: updatedEvent,
+                editedEvent: {
+                            id: uniqid(),
+                            name: "",
+                            hour: "",
+                            minute: ""
+                        }
+            }
+        }
         )
+        // this.setState(prevState => ({
+        //     events: [...prevState.events, prevState.editedEvent],
+        //     editedEvent: {
+        //         id: uniqid(),
+        //         name: "",
+        //         hour: "",
+        //         minute: ""
+        //     }
+        // })
+        // )
     };
 
     handleRemoveEvent(id) {
         this.setState(prevState => ({
             events: prevState.events.filter(el => el.id !== id)
+        }))
+    }
+
+    handleEditInit(id) {
+        this.setState(prevState => ({
+            editedEvent: { ...prevState.events.find(el => el.id === id) } // object's copy, not a link to an existance
+            //editedEvent: { ...prevState.events[id] } // object's copy, not a link to an existance
         }))
     }
 
@@ -63,7 +95,9 @@ class App extends Component {
                     name={el.name}
                     hour={el.hour}
                     minute={el.minute} 
-                    onRemove = {(id) => this.handleRemoveEvent(id)}      
+                    onEdit = {(id) => this.handleEditEvent(id)}
+                    onEditinit = {(id) => this.handleEditInit(id)}
+                    onRemove = {(id) => this.handleRemoveEvent(id)}
                 />
                 </div>
             )
